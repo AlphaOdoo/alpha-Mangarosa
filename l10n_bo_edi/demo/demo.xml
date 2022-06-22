@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="1">
+    <record id="object0" model="modalities">
+      <field name="description">Electronica</field>
+    </record>
+
+    <record id="object1" model="modalities">
+      <field name="description">Computarizada</field>
+    </record>
+
+    <record id="object2" model="modalities">
+      <field name="description">Manual</field>
+    </record>
+
+    <record id="object3" model="modalities">
+      <field name="description">Web</field>
+    </record>
+
+    <record id="object4" model="branch_office">
+      <field name="id_branch_office">0</field>
+      <field name="description">CASA MATRIZ</field>
+      <field name="address">Av 6 de Agosto, Edificio Hilda</field>
+    </record>
+
+    <record id="object5" model="selling_point">
+      <field name="id_selling_point">0</field>
+      <field name="description">PUNTO DE VENTA 0</field>
+      <field name="branch_office_id" ref="object4"></field>
+    </record>
+
+    <record id="object6" model="emission_types">
+      <field name="id_emission_type">1</field>
+      <field name="description">En Linea</field>
+    </record>
+
+    <record id="object7" model="id_type">
+      <field name="id_type_code">1</field>
+      <field name="description">CI - CEDULA DE IDENTIDAD</field>
+      <field name="description">CEX - CEDULA DE IDENTIDAD DE EXTRANJERO</field>
+      <field name="description">PAS - PASAPORTE</field>
+      <field name="description">OD - OTRO DOCUMENTO DE IDENTIDAD</field>
+      <field name="description">NIT - NÚMERO DE IDENTIFICACIÓN TRIBUTARIA</field>
+    </record>
+
+    <record id="object8" model="sector_types">
+      <field name="id_sector_type">1</field>
+      <field name="description">FACTURA COMPRA-VENTA</field>
+    </record>
+
+    <record id="object9" model="sector_types">
+      <field name="id_sector_type">24</field>
+      <field name="description">NOTA DE CREDITO-DEBITO</field>
+    </record>
+
+    <record id="object10" model="l10n_bo.company.activities">
+      <field name="code">1220</field>
+      <field name="name">REALIZA ACTIVIDADES SOLO DE IMPORTACION</field>
+      <field name="type">S</field>
+    </record>
+
+    <record id="object11" model="l10n_bo.company.activities">
+      <field name="code">464300</field>
+      <field name="name">VENTA AL POR MAYOR DE OTROS PRODUCTOS</field>
+      <field name="type">P</field>
+    </record>
+
+    <record id="object12" model="l10n_bo.company.activities">
+      <field name="code">951000</field>
+      <field name="name">MANTENIMIENTO Y REPARACION MAQ DE OFICINA E INFORMATICA</field>
+      <field name="type">S</field>
+    </record>
+
+    <record id="object13" model="sin_items">
+      <field name="sin_code">87290</field>
+      <field name="description">SERVICIO DE MANTENIMIENTO Y REPARACION DE OTROS BIENES N.C.P.</field>
+      <field name="activity_code" ref="object12"></field>
+    </record>
+
+    <record id="object14" model="measure_unit">
+      <field name="measure_unit_code">1</field>
+      <field name="description">MED</field>
+    </record>
+
+    <record id="object15" model="bo_edi_params">
+      <field name="param_code">1</field>
+      <field name="name">XML</field>
+      <field name="value">/home/alphabrad/Odoo/signTests/Unsigned/</field>
+      <!-- <field name="value">/home/odoo/bo_edi/Unsigned</field> -->
+    </record>
+
+    <record id="object16" model="bo_edi_params">
+      <field name="param_code">2</field>
+      <field name="name">KEY</field>
+      <field name="value">PK/JOSE_ISRAEL_ESCARCHA_BORJA_PK_V2.pem</field>
+    </record>
+
+    <record id="object17" model="bo_edi_params">
+      <field name="param_code">3</field>
+      <field name="name">PWDCERTIFICADO</field>
+      <field name="value">Alpha123</field>
+    </record>
+
+    <record id="object18" model="ambience">
+      <field name="id_ambience">2</field>
+      <field name="description">PRUEBAS</field>
+    </record>
+
+    <record id="object19" model="modalities">
+      <field name="id_modality">1</field>
+      <field name="description">ELECTRONICA</field>
+    </record>
+
+    <!-- Codigo Propio-->
+    <!-- <record id="object20" model="bo_edi_params">
+      <field name="param_code">4</field>
+      <field name="name">CODIGOSISTEMA</field>
+      <field name="value">6D325A65EF7DD3E7A6DF41E</field>
+    </record> -->
+
+    <!-- Codigo Proveedor -->
+    <record id="object20" model="bo_edi_params">
+      <field name="param_code">4</field>
+      <field name="name">CODIGOSISTEMA</field>
+      <field name="value">71DA27AF49CA97D71B2541E</field>
+    </record>
+
+    <record id="object21" model="bo_edi_params">
+      <field name="param_code">5</field>
+      <field name="name">NIT</field>
+      <field name="value">1020469023</field>
+    </record>
+
+    <!-- Token Version Propio-->
+    <!-- <record id="object22" model="bo_edi_params"> 
+      <field name="param_code">6</field>
+      <field name="name">TOKENAPI</field>
+      <field name="value">TokenApi eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBTFBIQVNZUyIsImNvZGlnb1Npc3RlbWEiOiI2RDMyNUE2NUVGN0REM0U3QTZERjQxRSIsIm5pdCI6Ikg0c0lBQUFBQUFBQUFETTBNREl3TWJNME1ESUdBTEhmWTI4S0FBQUEiLCJpZCI6MTAyODg5NCwiZXhwIjoxNjcyNzkwNDAwLCJpYXQiOjE2NDEzMTYyOTIsIm5pdERlbGVnYWRvIjoxMDIwNDY5MDIzLCJzdWJzaXN0ZW1hIjoiU0ZFIn0.emAsAKMWsdMooSG-6gNh9bJinjIL4HrXski0lrSqDQuSF7T3RyD8z65c5AFljEl1qSwspVEJr6KGcgFOnp2qNw</field>
+    </record> -->
+
+    <!-- Token Version Proveedor-->
+    <record id="object22" model="bo_edi_params">
+      <field name="param_code">6</field>
+      <field name="name">TOKENAPI</field>
+      <field name="value">TokenApi eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBTFBIQVNZUyIsImNvZGlnb1Npc3RlbWEiOiI3MUU0REZDQjk0MjIxODY1MzlBOTQxRiIsIm5pdCI6Ikg0c0lBQUFBQUFBQUFETTBNREl3TWJNME1ESUdBTEhmWTI4S0FBQUEiLCJpZCI6MTAyODg5NCwiZXhwIjoxNjc3ODAxNjAwLCJpYXQiOjE2NDYzMjg5NzAsIm5pdERlbGVnYWRvIjoxMDIwNDY5MDIzLCJzdWJzaXN0ZW1hIjoiU0ZFIn0.sMS55wApVk8SKeC5jagkfszX84xWZ8CmNqUh5kkP6T30sF8B7NGLK_Ij64DWY4WEr34q5VHrOsgAsqs5dJBvCQ</field>
+    </record>
+
+    <!-- CUIS Proveedor MATRIZ-->
+    <record id="object23" model="bo_edi_params">
+      <field name="param_code">7</field>
+      <field name="name">CUIS-0</field>
+      <field name="value">3664E7CD</field>
+    </record>
+
+
+    <record id="object24" model="bo_edi_params">
+      <field name="param_code">8</field>
+      <field name="name">CERTIFICADO</field>
+      <field name="value">CERTIFICADO/JOSE_ISRAEL_ESCARCHA_BORJA V2.crt</field>
+    </record>
+
+    <record id="object25" model="bo_edi_params">
+      <field name="param_code">9</field>
+      <field name="name">XSDCompraVenta</field>
+      <field name="value">/home/alphabrad/Odoo/signTests/Unsigned/facturaElectronicaCompraVenta.xsd</field>
+    </record>
+
+    <record id="object26" model="bo_edi_params">
+      <field name="param_code">10</field>
+      <field name="name">CUIS-1</field>
+      <field name="value">79E1F85B</field>
+    </record>
+
+    <record id="object27" model="ambience">
+      <field name="id_ambience">1</field>
+      <field name="description">PRODUCCION</field>
+    </record>
+
+    <record id="object28" model="invoice_dosage">
+      <field name="code">Dos-CompraVenta-070222</field>
+      <field name="auth_number">265401200123385</field>
+      <field name="end_date">2022-08-06 00:00:00</field>
+      <field name="selling_point_id" ref="object5"></field>
+      <field name="invoice_number">1</field>
+      <field name="key">8Vu*+BEa8yybz-2i5)FbQG+9=zH%CB+xxZ=6JDWGEX8m6QfyC%(bWNX@[UV](u]k</field>
+      <field name="invoice_caption">Ley N° 453: El proveedor debe brindar atención sin discriminación, con respeto, calidez y cordialidad a los usuarios y consumidores</field>
+    </record>
+
+    <record id="object29" model="bo_edi_params">
+      <field name="param_code">11</field>
+      <field name="name">XMLSIGNED</field>
+      <field name="value">/home/alphabrad/Odoo/signTests/Signed/</field>
+    </record>
+
+    <record id="object30" model="bo_edi_params">
+      <field name="param_code">12</field>
+      <field name="name">CREDENTIALSPATH</field>
+      <field name="value">/home/alphabrad/Odoo/signTests/FIRMA</field>
+    </record>
+
+    <!-- <record id="object24" model="cufd_log">
+      <field name="id_cufd">1</field>
+      <field name="cufd">	BQWVDwr9FQ0JBNzTg2NTM5QTk0MUY=Qj5pa1ZNRkRXVUFFFNERGQ0I5NDIyM</field>
+      <field name="begin_date">03/04/2022 01:27:20</field>
+      <field name="end_date">03/04/2022 22:27:20</field>
+      <field name="invoice_number">1</field>
+      <field name="selling_point" ref="object5"></field>
+    </record> -->
+    <!--
+          <record id="object0" model="l10n_bo_edi.l10n_bo_edi">
+            <field name="name">Object 0</field>
+            <field name="value">0</field>
+          </record>
+
+          <record id="object1" model="l10n_bo_edi.l10n_bo_edi">
+            <field name="name">Object 1</field>
+            <field name="value">10</field>
+          </record>
+
+          <record id="object2" model="l10n_bo_edi.l10n_bo_edi">
+            <field name="name">Object 2</field>
+            <field name="value">20</field>
+          </record>
+
+          <record id="object3" model="l10n_bo_edi.l10n_bo_edi">
+            <field name="name">Object 3</field>
+            <field name="value">30</field>
+          </record>
+
+          <record id="object4" model="l10n_bo_edi.l10n_bo_edi">
+            <field name="name">Object 4</field>
+            <field name="value">40</field>
+          </record>
+-->
+  </data>
+</odoo>

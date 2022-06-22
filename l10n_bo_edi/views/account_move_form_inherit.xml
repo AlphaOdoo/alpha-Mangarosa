@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- <data noupdate="1"> -->
+
+    <record id="account_move_bo_edi_form" model="ir.ui.view">
+        <field name="model">account.move</field>
+        <field name="name">account.move.bo.edi.form</field>
+        <field name="inherit_id" ref="account.view_move_form"></field>
+        <field name="arch" type="xml">
+            <!--Para poder obtener el valor del flag, se debe definir en la vista, si se desea ocultar el flag, utilizar invisible="1" -->
+            <xpath expr="//sheet//notebook" position="inside" attrs="{'invisible': [('country_code', '!=', 'BO')]}">
+                <field name="e_billing" invisible="1"/>
+                <page id="bo_edi_info" string="BO EDI Information" attrs="{'invisible': [('e_billing', '!=', True)]}">
+
+                    <div class="container">
+                        <div class="row">
+                            <button name='getCuf' type="object" string="Limpiar" class="btn-secondary"/>
+                            <button name='sync_activities' type="object" string="Comunicación SIN" class="btn-info"/>
+                            <button name='set_bo_edi_info' type="object" string="Llenado de Codigos" class="btn-info"/>
+                            <button name='getheaderInvoiceData' type="object" string="Generar Factura XML" class="btn-primary"/>
+                            <button name="print_report" type="object" string="Representación Gráfica" class="btn-primary"/>
+                        </div>
+                    </div>
+
+                    <br/>
+                    <br/>
+                    <br/>
+                    <span class="o_form_label">SIN Codes</span>
+                    <label string="CUFD Code" for="l10n_bo_cufd" class="col-lg-4 o_light_label"/>
+                    <field name="l10n_bo_cufd" context="{'search_by_code': True}"/>
+                    <br/>
+                    <br/>
+                    <label string="CUF Code" for="l10n_bo_cuf" class="col-lg-4 o_light_label"/>
+                    <field name="l10n_bo_cuf" context="{'search_by_code': True}"/>
+
+                    <br/>
+
+                    <div id="l10n_bo_section" class="row mt16 o_settings_container" attrs="{'invisible': [('country_code', '!=', 'BO')]}">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Branch Office Info</span>
+                                <br/>
+                                <div class="content-group">
+                                    <div class="row mt16">
+                                        <label string="Branch Office" for="l10n_bo_branch_office" class="col-lg-4 o_light_label"/>
+                                        <field name="l10n_bo_branch_office" context="{'search_by_code': True}"/>
+                                        <br/>
+                                        <label string="Selling Point" for="l10n_bo_selling_point" class="col-lg-4 o_light_label"/>
+                                        <field name="l10n_bo_selling_point" context="{'search_by_code': True}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Emission Info</span>
+                                <br/>
+                                <div class="content-group">
+                                    <div class="row mt16">
+                                        <label string="Invoice Number" for="l10n_bo_invoice_number" class="col-lg-4 o_light_label"/>
+                                        <field name="l10n_bo_invoice_number" context="{'search_by_code': True}"/>
+                                        <br/>
+                                        <label string="Emission type" for="l10n_bo_emission_type" class="col-lg-4 o_light_label"/>
+                                        <field name="l10n_bo_emission_type" context="{'search_by_code': True}"/>
+                                        <br/>
+                                        <label string="Document Status" for="l10n_bo_document_status" class="col-lg-4 o_light_label"/>
+                                        <field name="l10n_bo_document_status" context="{'search_by_code': True}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <!-- <div class="row">
+                            <div class="card text-dark bg-light mb-3" style="max-width: 18rem;">
+                                <div class="card-header">Cancellation</div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Select reason before commiting a cancellation:</h5>
+                                    <div class="col">
+                                        <field name="l10n_bo_cancellation_reason" context="{'search_by_code': True}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </page>
+
+                <page id="bo_edi_info" string="BO Information" attrs="{'invisible': [('e_billing', '!=', False)]}">
+                    <form string="BO Dosage Set">
+                        <sheet>
+                            <group>
+                                <field name="inv_type" invisible="1"/>
+                                <group string="Dosages" attrs="{'invisible':[('inv_type', '=', True)]}">
+                                    <field name="dosage_id"/>
+                                </group>
+                                <group string="Invoice Dosage Data">
+                                    <field name="auth_number" attrs="{'readonly':[('inv_type', '=', False)]}" context="{'search_by_code': True}"/>
+                                    <field name="control_code" attrs="{'readonly':[('inv_type', '=', False)]}" context="{'search_by_code': True}"/>
+                                    <field name="l10n_bo_invoice_number" attrs="{'readonly':[('inv_type', '=', False)]}" context="{'search_by_code': True}"/>
+                                    <field name="dui" attrs="{'invisible':[('inv_type', '=', False)], 'readonly':[('inv_type', '=', False)]}" context="{'search_by_code': True}"/>
+                                </group>
+                            </group>
+                        </sheet>
+                    </form>
+                </page>
+            </xpath>
+
+            <!-- <xpath expr="//sheet//group" position="before">
+                <div class="card text-dark bg-light mb-3" attrs="{'invisible':[('inv_type', '=', True)]}" style="width: 50%;">
+                    <div class="card-header">Invoice Dosage</div>
+                    <div class="card-body">
+                        <form string="BO Dosage Set">
+                            <sheet>
+                                <group>
+                                    <field name="inv_type" invisible="1"/>
+                                    <group string="Dosages">
+                                        <field name="dosage_id"/>
+                                    </group>
+                                    <group string="Invoice Dosage Data">
+                                        <field name="auth_number" attrs="{'readonly':[('inv_type', '=', False)]}" context="{'search_by_code': True}"/>
+                                        <field name="control_code" attrs="{'readonly':[('inv_type', '=', False)]}" context="{'search_by_code': True}"/>
+                                        <field name="l10n_bo_invoice_number" attrs="{'readonly':[('inv_type', '=', False)]}" context="{'search_by_code': True}"/>
+                                        <field name="dui" attrs="{'invisible':[('inv_type', '=', False)], 'readonly':[('inv_type', '=', False)]}" context="{'search_by_code': True}"/>
+                                    </group>
+                                </group>
+                            </sheet>
+                        </form>
+                    </div>
+                </div>
+            </xpath> -->
+
+        </field>
+    </record>
+
+    <!-- </data> -->
+
+
+</odoo>
