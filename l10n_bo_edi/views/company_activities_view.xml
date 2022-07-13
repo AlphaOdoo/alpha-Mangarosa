@@ -48,9 +48,9 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem name="SIN Partner Activities"
+    <menuitem name="SIN Company Activities"
         id="menu_action_act_partner_activities"
         action="act_partner_activities" 
         parent="l10n_bo_edi.menu_sin_bolivia"
-        sequence="6"/>
+        sequence="17"/>
 </odoo>

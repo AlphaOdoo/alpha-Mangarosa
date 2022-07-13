@@ -47,8 +47,8 @@
     </record>
 
     <menuitem name="SIN Items"
-        id="menu_action_act_partner_activities"
+        id="menu_action_act_sin_items"
         action="act_sin_items" 
         parent="l10n_bo_edi.menu_sin_bolivia"
-        sequence="7"/>
+        sequence="16"/>
 </odoo>

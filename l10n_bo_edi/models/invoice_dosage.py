@@ -4,6 +4,7 @@ from odoo import fields, models
 class Invoice_dosage(models.Model):
     _name = 'invoice_dosage'
     _description = 'BO SIN invoice dosage'
+    _rec_name = 'code' ## Para cambiar el texto a desplegar en front
 
     code = fields.Text('Code')
 
@@ -18,3 +19,6 @@ class Invoice_dosage(models.Model):
     key = fields.Text('Dosage Key')
 
     invoice_caption = fields.Text('Invoice Caption')
+
+    activity_id = fields.Many2one('l10n_bo.company.activities', string='Activity Code')
+    

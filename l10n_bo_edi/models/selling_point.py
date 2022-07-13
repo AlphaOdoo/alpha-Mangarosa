@@ -4,9 +4,12 @@ from odoo import fields, models
 class SellingPoint(models.Model):
     _name = 'selling_point'
     _description = 'selling_point'
+    _rec_name = 'description' ## Para cambiar el texto a desplegar en front
 
     id_selling_point = fields.Integer(
         string='Selling Point Code', required=True)
+
+    name = fields.Char(string='Name')
 
     description = fields.Text(string='Description')
 
@@ -24,6 +27,8 @@ class SellingPoint(models.Model):
 
     invoice_dosage_ids = fields.One2many(
         'invoice_dosage', 'selling_point_id', string='Invoice Dosages')
+    
+    cuis = fields.Char(string='CUIS')
 
     active = fields.Boolean(
         'Active', help='Allows you to hide the selling point without removing it.', default=True)

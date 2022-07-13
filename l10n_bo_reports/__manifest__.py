@@ -14,7 +14,7 @@
     # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     'category': 'Accounting/Localizations',
-    'version': '1.0',
+    'version': '14.0.6.0',
 
     # any module necessary for this one to work correctly
     'depends': ['base', 'l10n_bo_edi'],
@@ -31,7 +31,10 @@
         'wizard/bankbook_wizard_view.xml',
         'views/account_report_menuitems.xml',
         'reports/sales_book.xml',
-        'reports/sales_book_templates.xml'
+        'reports/sales_book_templates.xml',
+        'reports/accountentry_report.xml',
+        'reports/accountentry_report_templates.xml',
+        #'views/account_move_view_inherit.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
