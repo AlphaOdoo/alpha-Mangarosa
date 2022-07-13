@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="accountentry_report_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+                        <div class="page">                            
+                            <h2>Asiento Contable</h2>
+                            <h4><span t-field="o.name"/></h4>
+
+                            <div class="row justify-content-start">
+                                <div class="col-3">
+                                    <p align="left">Diario:</p>
+                                </div>
+                                <div class="col-3">
+                                    <p t-field="o.journal_id"/>
+                                </div>
+                                <div class="col-3">
+                                    <p align="left">Fecha Contable:</p>
+                                </div>
+                                <div class="col-3">
+                                    <p t-field="o.date"/>
+                                </div>
+                            </div>
+                            <div class="row justify-content-start">
+                                <div class="col-3">
+                                    <p align="left">Referencia:</p>
+                                </div>
+                                <div class="col-3">
+                                    <p t-field="o.ref"/>
+                                </div>
+                                <div class="col-3">
+                                    <p align="left">Tipo de Cambio:</p>
+                                </div>
+                                <div class="col-3">
+                                    <p align="left">6.96</p>
+                                </div>
+                            </div>
+                            <div class="row justify-content-start">
+                                <div class="col-3">
+                                    <p align="left">Cliente:</p>
+                                </div>
+                                <div class="col-3">
+                                    <p t-field="o.partner_id"/>
+                                </div>
+                                <div class="col-3">
+                                    <p align="left"></p>
+                                </div>
+                                <div class="col-3">
+                                    <!-- <p t-field="o.creditotal"/> -->
+                                </div>
+                            </div>
+
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2" align="center">Nombre Cuenta</th>
+                                        <th rowspan="2" align="center">Etiqueta</th>
+                                        <th colspan="2" align="center">Bolivianos</th>
+                                        <th colspan="2" align="center">Dólares</th>
+                                    </tr>
+                                    <tr>  
+                                        <th align="center">Debe Bs</th>
+                                        <th align="center">Haber Bs</th>                                        
+                                        <th align="center">Debe USD</th>
+                                        <th align="center">Haber USD</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="o.line_ids" t-as="det">
+                                        <td>
+                                            <span t-field="det.account_id"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="det.name"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="det.debit"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="det.credit"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="'{0:,.2f}'.format(float(det.debit/6.96))"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="'{0:,.2f}'.format(float(det.credit/6.96))"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="2" align="center">TOTALES
+                                        </th>
+                                        <th>
+                                            <p t-field="o.amount_total_signed"/>
+                                        </th>
+                                        <th>
+                                            <p t-field="o.amount_total_signed"/>
+                                        </th>
+                                        <th>
+                                            <p t-esc="'{0:,.2f}'.format(float(o.amount_total_signed/6.96))"/>
+                                        </th>
+                                        <th>
+                                            <p t-esc="'{0:,.2f}'.format(float(o.amount_total_signed/6.96))"/>
+                                        </th>
+                                    </tr>
+                                   
+
+                                </tbody>
+                            </table>
+
+                            <footer>
+                                <table class="table borderless">            
+                                    <tbody>
+                                        <tr>
+                                            <td align="center">Hecho por</td><!-- Responsable que confirma -->
+                                            <td align="center">Verificado por</td> <!-- jefe de areaa -->
+                                            <td align="center">Gerente Adm. y Financiera</td><!--  -->
+                                            <td align="center">Gerencia General</td><!-- -->
+                                        </tr>
+                                        <tr>
+                                            <td align="center">
+                                                <p t-field="o.create_uid"/>
+                                            
+                                            </td>
+                                            <td align="center">------------------------------</td>
+                                            <td align="center">------------------------------</td>
+                                            <td align="center">------------------------------</td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
+                            </footer>
+
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

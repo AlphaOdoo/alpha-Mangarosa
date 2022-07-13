@@ -35,8 +35,8 @@ class SalesBookWizard(models.TransientModel):
     # def trigger_report(self):
 
     #     invoice_ids = self.env['account.move'].search(
-    #         ['&', ('invoice_date_due', '>=', self.begin_date),
-    #          ('invoice_date_due', '<=', self.end_date)])
+    #         ['&', ('invoice_date', '>=', self.begin_date),
+    #          ('invoice_date', '<=', self.end_date)])
 
     #     # _logger.info(str(invoice_ids[0].amount_total))
     #     # PENDIENTE FILTRO POR FECHAS
@@ -46,8 +46,8 @@ class SalesBookWizard(models.TransientModel):
     def trigger_report(self):
 
         invoice_ids = self.env['account.move'].search(
-            ['&', ('invoice_date_due', '>=', self.begin_date),
-             ('invoice_date_due', '<=', self.end_date)])
+            ['&', ('invoice_date', '>=', self.begin_date),
+             ('invoice_date', '<=', self.end_date)])
 
         _logger.info(str(invoice_ids))
         _logger.info(str(len(invoice_ids)))
@@ -75,14 +75,16 @@ class SalesBookWizard(models.TransientModel):
         return notification
 
     def print_xlsx(self):
-        invoice_ids = self.env['account.move'].search(
-            ['&', ('invoice_date_due', '>=', self.begin_date),
-             ('invoice_date_due', '<=', self.end_date),
-             ('name', 'like', 'INV')])
-        print(str(invoice_ids))
 
         if self.begin_date > self.end_date:
             raise ValidationError('Start Date must be less than End Date')
+
+        invoice_ids = self.env['account.move'].search(
+            ['&', ('invoice_date', '>=', self.begin_date),
+             ('invoice_date', '<=', self.end_date),
+             ('journal_id.type', '=', 'sale'),
+             ('state', '!=', 'draft')])
+        _logger.info(str(invoice_ids))
 
         if (len(invoice_ids) == 0):
             raise ValidationError(
@@ -92,7 +94,7 @@ class SalesBookWizard(models.TransientModel):
         # TODO iterar sobre cada objeto y mapear lo requerido
         for index, inv in enumerate(invoice_ids):
             invoice_content = {}
-            invoice_content['invoice_date_due'] = inv.invoice_date_due.strftime(
+            invoice_content['invoice_date'] = inv.invoice_date.strftime(
                 '%d/%m/%Y')
             invoice_content['l10n_bo_invoice_number'] = inv.l10n_bo_invoice_number
             invoice_content['client_vat'] = inv.partner_id.vat
@@ -106,6 +108,7 @@ class SalesBookWizard(models.TransientModel):
             # Facturación Estándar
             invoice_content['auth_number'] = inv.auth_number
             invoice_content['control_code'] = inv.control_code
+            invoice_content['state'] = 'V' if inv.state == 'posted' else 'A'
             data[index] = invoice_content
 
         return {
@@ -171,13 +174,10 @@ class SalesBookWizard(models.TransientModel):
             # if(index % 2 == 0):
             #     print('entra')
             #     txt.set_bg_color('#97c5db')
-            print(inv[1]['amount_by_group'])
-            print(inv[1]['control_code'])
-            print(inv[1]['auth_number'])
             sheet.write('A' + str(int(inv[0]) + 5), str(int(inv[0]) + 1), txt)
             sheet.write('B' + str(int(inv[0]) + 5), '2', txt)
             sheet.write('C' + str(int(inv[0]) + 5),
-                        inv[1]['invoice_date_due'], txt)
+                        inv[1]['invoice_date'], txt)
             sheet.write('D' + str(int(inv[0]) + 5),
                         inv[1]['l10n_bo_invoice_number'], txt)
             if invoice_type:
@@ -204,13 +204,15 @@ class SalesBookWizard(models.TransientModel):
             #             inv[1]['amount_by_group'], txt)
             sheet.write('R' + str(int(inv[0]) + 5), '0', txt)
             sheet.write('S' + str(int(inv[0]) + 5), '0.00', txt)
+            # sheet.write('T' + str(int(inv[0]) + 5),
+            #             inv[1]['amount_untaxed'], txt)
             sheet.write('T' + str(int(inv[0]) + 5),
-                        inv[1]['amount_untaxed'], txt)
-            deb_fiscal = (int(inv[1]['amount_untaxed'])
+                        inv[1]['amount_total'], txt)
+            deb_fiscal = (int(inv[1]['amount_total'])
                           * 0.13)
             sheet.write('U' + str(int(inv[0]) + 5),
                         str(round(deb_fiscal, 2)), txt)
-            sheet.write('V' + str(int(inv[0]) + 5), 'V', txt)
+            sheet.write('V' + str(int(inv[0]) + 5), inv[1]['state'], txt)
             if invoice_type:
                 sheet.write('W' + str(int(inv[0]) + 5),
                             inv[1]['efact_control_code'], txt)

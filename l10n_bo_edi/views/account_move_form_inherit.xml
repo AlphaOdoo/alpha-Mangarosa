@@ -8,22 +8,41 @@
         <field name="name">account.move.bo.edi.form</field>
         <field name="inherit_id" ref="account.view_move_form"></field>
         <field name="arch" type="xml">
+
+            <!-- <xpath expr="//sheet" position="before" attrs="{'invisible': [('journal_type', '!=', 'sale')]}">
+                <field name="is_drafted" invisible="1"/>
+                <field name="is_cancelled" invisible="1"/>
+                <div class="alert alert-info" role="alert" style="margin-bottom:0px;"
+                        attrs="{'invisible': [('is_drafted', '=', False)]}">
+                    <bold>
+                        <span title="light" class="fa fa-lightbulb-o" role="img"/>
+                    </bold>
+                    Since the current invoice has been confirmed, we cannot resend it to SIN after returned to draft; in order to resend it please cancel and confirm.
+                </div>
+            </xpath> --> <!--Habilitar alerta en cuanto se pueda filtrar por journal_type-->
+
             <!--Para poder obtener el valor del flag, se debe definir en la vista, si se desea ocultar el flag, utilizar invisible="1" -->
             <xpath expr="//sheet//notebook" position="inside" attrs="{'invisible': [('country_code', '!=', 'BO')]}">
                 <field name="e_billing" invisible="1"/>
-                <page id="bo_edi_info" string="BO EDI Information" attrs="{'invisible': [('e_billing', '!=', True)]}">
+                <field name="inv_type" invisible=" 1"/>
+                <field name="is_confirmed" invisible="1"/>
+                <field name="journal_type" invisible="1"/>
+                <page id="bo_edi_info" string="BO EDI Information" attrs="{'invisible': ['|',('e_billing', '=', False), ('inv_type', '=', False)]}">
+
+<!-- 
 
                     <div class="container">
                         <div class="row">
-                            <button name='getCuf' type="object" string="Limpiar" class="btn-secondary"/>
+                            <button name='testAsync' type="object" string="Limpiar" class="btn-secondary"/>
                             <button name='sync_activities' type="object" string="Comunicación SIN" class="btn-info"/>
                             <button name='set_bo_edi_info' type="object" string="Llenado de Codigos" class="btn-info"/>
-                            <button name='getheaderInvoiceData' type="object" string="Generar Factura XML" class="btn-primary"/>
+                            <button name='check_conectivity' type="object" string="Generar Factura XML" class="btn-primary"/>
                             <button name="print_report" type="object" string="Representación Gráfica" class="btn-primary"/>
                         </div>
-                    </div>
+                    </div> -->
 
                     <br/>
+                    <button name="print_report" type="object" string="Invoice Representation" class="btn-primary" attrs="{'invisible': [('is_confirmed', '=', False)]}"/>
                     <br/>
                     <br/>
                     <span class="o_form_label">SIN Codes</span>
@@ -88,19 +107,26 @@
                     </div>
                 </page>
 
-                <page id="bo_edi_info" string="BO Information" attrs="{'invisible': [('e_billing', '!=', False)]}">
+                <!-- <page id="bo_edi_info" string="BO Information" attrs="{'invisible': [('e_billing', '!=', False)]}"> -->
+                <page id="bo_edi_info" string="BO Information" attrs="{'invisible': ['&amp;',('e_billing', '=', True), ('inv_type', '=', True)]}">
+                    <field name="inv_type" invisible=" 1"/>
                     <form string="BO Dosage Set">
                         <sheet>
                             <group>
-                                <field name="inv_type" invisible="1"/>
-                                <group string="Dosages" attrs="{'invisible':[('inv_type', '=', True)]}">
-                                    <field name="dosage_id"/>
-                                </group>
                                 <group string="Invoice Dosage Data">
-                                    <field name="auth_number" attrs="{'readonly':[('inv_type', '=', False)]}" context="{'search_by_code': True}"/>
-                                    <field name="control_code" attrs="{'readonly':[('inv_type', '=', False)]}" context="{'search_by_code': True}"/>
-                                    <field name="l10n_bo_invoice_number" attrs="{'readonly':[('inv_type', '=', False)]}" context="{'search_by_code': True}"/>
-                                    <field name="dui" attrs="{'invisible':[('inv_type', '=', False)], 'readonly':[('inv_type', '=', False)]}" context="{'search_by_code': True}"/>
+                                    <field name="auth_number" attrs="{'readonly':[('inv_type', '!=', False)]}" context="{'search_by_code': True}"/>
+                                    <field name="control_code" attrs="{'readonly':[('inv_type', '!=', False)]}" context="{'search_by_code': True}"/>
+                                    <!-- <field name="l10n_bo_invoice_number" attrs="{'readonly':[('inv_type', '!=', False)]}" context="{'search_by_code': True}"/> -->
+                                    <!--Cambio correlativo provisional-->
+                                    <field name="l10n_bo_invoice_number" attrs="{'readonly':[('state', '=', 'cancel')]}" context="{'search_by_code': True}"/>
+                                    <field name="dui" attrs="{'invisible':[('inv_type', '!=', False)], 'readonly':[('inv_type', '!=', False)]}" context="{'search_by_code': True}"/>
+                                </group>
+                                <group string="Dosages" attrs="{'invisible':[('inv_type', '!=', True)]}">
+                                    <field name="dosage_id" attrs="{'readonly':[('state','=','cancel')]}"/>
+                                    <field name="reversed_inv_id" domain="['&amp;',('invoice_dosage_id', '=', dosage_id), ('inv_reversed' , '=', False)]" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                </group>
+                                <group>
+                                    <button name="print_report" type="object" string="Invoice Report" class="btn-primary" attrs="{'invisible': ['|',('is_confirmed', '=', False) , ('state', '!=', 'posted')]}"/>
                                 </group>
                             </group>
                         </sheet>
@@ -135,6 +161,16 @@
         </field>
     </record>
 
+    <record id="account_move_bo_edi_tree" model="ir.ui.view">
+        <field name="name">account.move.bo.edi.tree</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_out_invoice_tree"></field>
+        <field name="arch" type="xml">
+           <xpath expr="//tree" position="attributes">
+                <field name="l10n_bo_invoice_number"></field>
+            </xpath>
+        </field>
+    </record>
     <!-- </data> -->
 
 

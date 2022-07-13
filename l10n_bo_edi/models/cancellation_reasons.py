@@ -4,6 +4,7 @@ from odoo import fields, models
 class CancellationReasons(models.Model):
     _name = 'cancellation_reasons'
     _description = 'cancellation_reasons'
+    _rec_name = 'description' ## Para cambiar el texto a desplegar en front
 
     code = fields.Integer('code')
 

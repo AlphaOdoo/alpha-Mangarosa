@@ -12,7 +12,7 @@
                     <sheet>
                         <group>
                             <group>
-                                <field name="id_cufd"/>
+                                <field name="id_cufd" attrs="{'invisible': 0}"/>
                                 <field name="cufd"/>
                             </group>
                             <group>
@@ -44,7 +44,7 @@
             <field name="model">cufd_log</field>
             <field name="arch" type="xml">
                 <tree string="CUFD">
-                    <field name="id_cufd"/>
+                    <field name="id_cufd" attrs="{'invisible': 1}"/>
                     <field name="cufd"/>
                     <field name="invoice_number"/>
                     <field name="begin_date"/>
@@ -60,7 +60,7 @@
             <field name="model">cufd_log</field>
             <field name="arch" type="xml">
                 <search>
-                    <field name="id_cufd"/>
+                    <field name="id_cufd" attrs="{'invisible': 1}"/>
                     <field name="cufd"/>
                     <field name="begin_date"/>
                     <field name="invoice_number"/>

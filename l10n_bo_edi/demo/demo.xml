@@ -27,6 +27,7 @@
       <field name="id_selling_point">0</field>
       <field name="description">PUNTO DE VENTA 0</field>
       <field name="branch_office_id" ref="object4"></field>
+      <field name="cuis">4A457E96</field>
     </record>
 
     <record id="object6" model="emission_types">
@@ -54,8 +55,8 @@
     </record>
 
     <record id="object10" model="l10n_bo.company.activities">
-      <field name="code">1220</field>
-      <field name="name">REALIZA ACTIVIDADES SOLO DE IMPORTACION</field>
+      <field name="code">620100</field>
+      <field name="name">ACTIVIDADES DE DISEÑO E IMPLEMENTACION DE SISTEMAS INFORMATICOS</field>
       <field name="type">S</field>
     </record>
 
@@ -78,21 +79,21 @@
     </record>
 
     <record id="object14" model="measure_unit">
-      <field name="measure_unit_code">1</field>
-      <field name="description">MED</field>
+      <field name="measure_unit_code">57</field>
+      <field name="description">UNIDAD</field>
     </record>
 
     <record id="object15" model="bo_edi_params">
       <field name="param_code">1</field>
       <field name="name">XML</field>
-      <field name="value">/home/alphabrad/Odoo/signTests/Unsigned/</field>
-      <!-- <field name="value">/home/odoo/bo_edi/Unsigned</field> -->
+      <field name="value">/home/bduchen/Odoo/signTests/Unsigned/</field>
+      <!-- <field name="value">/home/odoo/bo_edi/signTests/Unsigned/</field> -->
     </record>
 
     <record id="object16" model="bo_edi_params">
       <field name="param_code">2</field>
       <field name="name">KEY</field>
-      <field name="value">PK/JOSE_ISRAEL_ESCARCHA_BORJA_PK_V2.pem</field>
+      <field name="value">PK/JOSE_ISRAEL_ESCARCHA_BORJA_PK_V4.pem</field>
     </record>
 
     <record id="object17" model="bo_edi_params">
@@ -122,7 +123,7 @@
     <record id="object20" model="bo_edi_params">
       <field name="param_code">4</field>
       <field name="name">CODIGOSISTEMA</field>
-      <field name="value">71DA27AF49CA97D71B2541E</field>
+      <field name="value">720240C8869AA8F30C8141E</field>
     </record>
 
     <record id="object21" model="bo_edi_params">
@@ -132,37 +133,38 @@
     </record>
 
     <!-- Token Version Propio-->
-    <!-- <record id="object22" model="bo_edi_params"> 
+    <record id="object22" model="bo_edi_params"> 
       <field name="param_code">6</field>
       <field name="name">TOKENAPI</field>
-      <field name="value">TokenApi eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBTFBIQVNZUyIsImNvZGlnb1Npc3RlbWEiOiI2RDMyNUE2NUVGN0REM0U3QTZERjQxRSIsIm5pdCI6Ikg0c0lBQUFBQUFBQUFETTBNREl3TWJNME1ESUdBTEhmWTI4S0FBQUEiLCJpZCI6MTAyODg5NCwiZXhwIjoxNjcyNzkwNDAwLCJpYXQiOjE2NDEzMTYyOTIsIm5pdERlbGVnYWRvIjoxMDIwNDY5MDIzLCJzdWJzaXN0ZW1hIjoiU0ZFIn0.emAsAKMWsdMooSG-6gNh9bJinjIL4HrXski0lrSqDQuSF7T3RyD8z65c5AFljEl1qSwspVEJr6KGcgFOnp2qNw</field>
-    </record> -->
+      <field name="value">TokenApi eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBTFBIQVNZUyIsImNvZGlnb1Npc3RlbWEiOiI3MjAyNDBDODg2OUFBOEYzMEM4MTQxRSIsIm5pdCI6Ikg0c0lBQUFBQUFBQUFETTBNREl3TWJNME1ESUdBTEhmWTI4S0FBQUEiLCJpZCI6MTAyODg5NCwiZXhwIjoxNjg0OTcyODAwLCJpYXQiOjE2NTM0ODYxOTgsIm5pdERlbGVnYWRvIjoxMDIwNDY5MDIzLCJzdWJzaXN0ZW1hIjoiU0ZFIn0.oOznOTdJnygYl0vp_dqxh51GaiPoJah-NbCfDG1HW9Nuj0lH2qKqxcEu2vN1x8kAUR2P_s8nssR6SyYQUb91zA</field>
+    </record>
 
     <!-- Token Version Proveedor-->
-    <record id="object22" model="bo_edi_params">
+    <!-- <record id="object22" model="bo_edi_params">
       <field name="param_code">6</field>
       <field name="name">TOKENAPI</field>
       <field name="value">TokenApi eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBTFBIQVNZUyIsImNvZGlnb1Npc3RlbWEiOiI3MUU0REZDQjk0MjIxODY1MzlBOTQxRiIsIm5pdCI6Ikg0c0lBQUFBQUFBQUFETTBNREl3TWJNME1ESUdBTEhmWTI4S0FBQUEiLCJpZCI6MTAyODg5NCwiZXhwIjoxNjc3ODAxNjAwLCJpYXQiOjE2NDYzMjg5NzAsIm5pdERlbGVnYWRvIjoxMDIwNDY5MDIzLCJzdWJzaXN0ZW1hIjoiU0ZFIn0.sMS55wApVk8SKeC5jagkfszX84xWZ8CmNqUh5kkP6T30sF8B7NGLK_Ij64DWY4WEr34q5VHrOsgAsqs5dJBvCQ</field>
-    </record>
+    </record> -->
 
     <!-- CUIS Proveedor MATRIZ-->
     <record id="object23" model="bo_edi_params">
       <field name="param_code">7</field>
       <field name="name">CUIS-0</field>
-      <field name="value">3664E7CD</field>
+      <field name="value">4A457E96</field>
     </record>
 
 
     <record id="object24" model="bo_edi_params">
       <field name="param_code">8</field>
       <field name="name">CERTIFICADO</field>
-      <field name="value">CERTIFICADO/JOSE_ISRAEL_ESCARCHA_BORJA V2.crt</field>
+      <field name="value">CERTIFICADO/JOSE_ISRAEL_ESCARCHA_BORJA V4.crt</field>
     </record>
 
     <record id="object25" model="bo_edi_params">
       <field name="param_code">9</field>
       <field name="name">XSDCompraVenta</field>
-      <field name="value">/home/alphabrad/Odoo/signTests/Unsigned/facturaElectronicaCompraVenta.xsd</field>
+      <field name="value">/home/bduchen/Odoo/signTests/Unsigned/facturaElectronicaCompraVenta.xsd</field>
+      <!-- <field name="value">/</field> -->
     </record>
 
     <record id="object26" model="bo_edi_params">
@@ -177,25 +179,274 @@
     </record>
 
     <record id="object28" model="invoice_dosage">
-      <field name="code">Dos-CompraVenta-070222</field>
+      <field name="code">VENTA AL POR MAYOR DE OTROS PRODUCTOS</field>
       <field name="auth_number">265401200123385</field>
       <field name="end_date">2022-08-06 00:00:00</field>
       <field name="selling_point_id" ref="object5"></field>
       <field name="invoice_number">1</field>
       <field name="key">8Vu*+BEa8yybz-2i5)FbQG+9=zH%CB+xxZ=6JDWGEX8m6QfyC%(bWNX@[UV](u]k</field>
       <field name="invoice_caption">Ley N° 453: El proveedor debe brindar atención sin discriminación, con respeto, calidez y cordialidad a los usuarios y consumidores</field>
+      <field name="activity_id" ref="object11"></field>
     </record>
 
     <record id="object29" model="bo_edi_params">
       <field name="param_code">11</field>
       <field name="name">XMLSIGNED</field>
-      <field name="value">/home/alphabrad/Odoo/signTests/Signed/</field>
+      <field name="value">/home/bduchen/Odoo/signTests/Signed/</field>
+      <!-- <field name="value">/home/odoo/bo_edi/signTests/Signed/</field> -->
     </record>
 
     <record id="object30" model="bo_edi_params">
       <field name="param_code">12</field>
       <field name="name">CREDENTIALSPATH</field>
-      <field name="value">/home/alphabrad/Odoo/signTests/FIRMA</field>
+      <field name="value">/home/alpha/Odoo/signTests/FIRMA</field>
+    </record>
+
+    <record id="object31" model="bo_edi_params">
+      <field name="param_code">13</field>
+      <field name="name">XMLSIGNEDSERVER</field>
+      <field name="value">/home/alpha/Odoo/signTests/Signed/</field>
+    </record>
+
+    <record id="object32" model="document_status">
+      <field name="code">1</field>
+      <field name="description">Aceptado</field>
+    </record>
+
+    <record id="object33" model="document_status">
+      <field name="code">2</field>
+      <field name="description">Anulado</field>
+    </record>
+
+    <record id="object34" model="document_status">
+      <field name="code">3</field>
+      <field name="description">Emitido</field>
+    </record>
+
+    <record id="object35" model="document_status">
+      <field name="code">4</field>
+      <field name="description">Rechazado</field>
+    </record>
+
+    <record id="object35" model="document_status">
+      <field name="code">5</field>
+      <field name="description">Aprobado</field>
+    </record>
+
+    <record id="object36" model="cancellation_reasons">
+      <field name="code">1</field>
+      <field name="description">FACTURA MAL EMITIDA</field>
+    </record>
+
+    <record id="object37" model="cancellation_reasons">
+      <field name="code">2</field>
+      <field name="description">NOTA DE CREDITO-DEBITO MAL EMITIDA</field>
+    </record>
+
+    <record id="object38" model="cancellation_reasons">
+      <field name="code">3</field>
+      <field name="description">DATOS DE EMISION INCORRECTOS</field>
+    </record>
+
+    <record id="object39" model="cancellation_reasons">
+      <field name="code">4</field>
+      <field name="description">FACTURA O NOTA DE CREDITO-DEBITO DEVUELTA</field>
+    </record>
+
+    <record id="object40" model="invoice_event">
+      <field name="code">1</field>
+      <field name="description">CORTE DEL SERVICIO DE INTERNET</field>
+    </record>
+
+    <record id="object41" model="invoice_event">
+      <field name="code">2</field>
+      <field name="description">INACCESIBILIDAD AL SERVICIO WEB DE LA ADMINISTRACIÓN TRIBUTARIA</field>
+    </record>
+
+    <record id="object42" model="invoice_event">
+      <field name="code">3</field>
+      <field name="description">INGRESO A ZONAS SIN INTERNET POR DESPLIEGUE DE PUNTO DE VENTA EN VEHICULOS AUTOMOTORES</field>
+    </record>
+
+    <record id="object43" model="invoice_event">
+      <field name="code">4</field>
+      <field name="description">VENTA EN LUGARES SIN INTERNET</field>
+    </record>
+
+    <record id="object44" model="invoice_event">
+      <field name="code">5</field>
+      <field name="description">CORTE DE SUMINISTRO DE ENERGIA ELECTRICA</field>
+    </record>
+
+    <record id="object45" model="invoice_event">
+      <field name="code">6</field>
+      <field name="description">VIRUS INFORMÁTICO O FALLA DE SOFTWARE</field>
+    </record>
+
+    <record id="object46" model="invoice_event">
+      <field name="code">7</field>
+      <field name="description">CAMBIO DE INFRAESTRUCTURA DEL SISTEMA INFORMÁTICO DE FACTURACIÓN O FALLA DE HARDWARE</field>
+    </record>
+
+    <!-- <record id="object47" model="invoice_incident_status">
+      <field name="code">1</field>
+      <field name="description">INICIO EVENTO SIGNIFICATIVO</field>
+    </record>
+
+    <record id="object48" model="invoice_incident_status">
+      <field name="code">2</field>
+      <field name="description">FIN EVENTO SIGNIFICATIVO</field>
+    </record>    
+
+    <record id="object49" model="invoice_incident_status">
+      <field name="code">3</field>
+      <field name="description">REGISTRO EVENTO SIGNIFICATIVO IMPUESTOS NACIONALES</field>
+    </record>
+
+    <record id="object50" model="invoice_incident_status">
+      <field name="code">4</field>
+      <field name="description">REGISTRO PAQUETE(S) IMPUESTOS NACIONALES</field>
+    </record>
+
+    <record id="object51" model="invoice_incident_status">
+      <field name="code">5</field>
+      <field name="description">FIN EVENTO SIFGNIFICATIVO IMPUESTOS</field>
+    </record> -->
+
+    <record id="object52" model="selling_point">
+      <field name="id_selling_point">1</field>
+      <field name="description">PUNTO DE VENTA 1</field>
+      <field name="branch_office_id" ref="object4"></field>
+      <field name="cuis">CDDBC664</field>
+    </record>
+
+    <record id="object53" model="bo_edi_params">
+      <field name="param_code">14</field>
+      <field name="name">ONLINE</field>
+      <field name="value">1</field>
+    </record>
+     <record id="object54" model="bo_edi_params">
+      <field name="param_code">15</field>
+      <field name="name">CANTPAQUETES</field>
+      <field name="value">1</field>
+    </record>
+    <record id="object55" model="bo_edi_params">
+      <field name="param_code">16</field>
+      <field name="name">CANTACTUALFACTPAQ</field>
+      <field name="value">1</field>
+    </record>
+     <record id="object56" model="bo_edi_params">
+      <field name="param_code">17</field>
+      <field name="name">EMPAQUETADO</field>
+      <!-- <field name="value">home/FACTURACIONELECTRONICA/EMPAQUETADO</field> -->
+      <field name="value">/home/bduchen/Odoo/packaging</field>
+      <!-- <field name="value">/home/odoo/bo_edi/packaging</field> -->
+    </record>
+     <record id="object57" model="bo_edi_params">
+      <field name="param_code">18</field>
+      <field name="name">PAQUETE</field>
+      <field name="value">500</field>
+    </record>
+
+    <record id="object58" model="l10n_bo.company.activities">
+      <field name="code">001220</field>
+      <field name="name">REALIZA ACTIVIDADES SOLO DE IMPORTACION</field>
+      <field name="type">S</field>
+    </record>
+
+    <record id="object59" model="sin_items">
+      <field name="sin_code">45220</field>
+      <field name="description">MÁQUINAS PORTÁTILES DE PROCESAMIENTO AUTOMÁTICO DE DATOS QUE NO PESEN MÁS DE 10 KG, COMO COMPUTADORES PORTÁTILES, NOTEBOOKS Y COMPUTADORES DE BOLSILLO</field>
+      <field name="activity_code" ref="object11"></field>
+    </record>
+
+    <record id="object60" model="sin_items">
+      <field name="sin_code">61284</field>
+      <field name="description">SERVICIOS DE COMERCIO AL POR MAYOR DE COMPUTADORES Y DE PAQUETES DE SOFTWARE, PRESTADOS A COMISIÓN O POR CONTRATO</field>
+      <field name="activity_code" ref="object11"></field>
+    </record>
+
+    <record id="object61" model="sin_items">
+      <field name="sin_code">61285</field>
+      <field name="description">SERVICIOS DE COMERCIO AL POR MAYOR DE EQUIPOS ELECTRÓNICOS Y DE TELECOMUNICACIONES Y SUS PARTES, PRESTADOS A COMISIÓN O POR CONTRATO</field>
+      <field name="activity_code" ref="object11"></field>
+    </record>
+    
+    <record id="object62" model="sin_items">
+      <field name="sin_code">61289</field>
+      <field name="description">SERVICIOS DE COMERCIO AL POR MAYOR DE OTRAS MAQUINARIAS Y EQUIPOS N.C.P., PRESTADOS A COMISIÓN O POR CONTRATO</field>
+      <field name="activity_code" ref="object11"></field>
+    </record>
+
+    <record id="object63" model="sin_items">
+      <field name="sin_code">612849</field>
+      <field name="description">SERVICIOS DE COMERCIO AL POR MAYOR DE COMPUTADORES Y DE PAQUETES DE SOFTWARE, PRESTADOS A COMISIÓN O POR CONTRATO IMPORTADO</field>
+      <field name="activity_code" ref="object11"></field>
+    </record>
+
+    <record id="object64" model="sin_items">
+      <field name="sin_code">612859</field>
+      <field name="description">SERVICIOS DE COMERCIO AL POR MAYOR DE EQUIPOS ELECTRÓNICOS Y DE TELECOMUNICACIONES Y SUS PARTES, PRESTADOS A COMISIÓN O POR CONTRATO IMPORTADO</field>
+      <field name="activity_code" ref="object11"></field>
+    </record>
+
+    <record id="object65" model="sin_items">
+      <field name="sin_code">612899</field>
+      <field name="description">SERVICIOS DE COMERCIO AL POR MAYOR DE OTRAS MAQUINARIAS Y EQUIPOS N.C.P., PRESTADOS A COMISIÓN O POR CONTRATO IMPORTADO</field>
+      <field name="activity_code" ref="object11"></field>
+    </record>
+
+    <record id="object66" model="sin_items">
+      <field name="sin_code">872909</field>
+      <field name="description">SERVICIOS DE MANTENIMIENTO Y REPARACIÓN DE OTROS BIENES N.C.P. IMPORTADO</field>
+      <field name="activity_code" ref="object12"></field>
+    </record>
+
+    <record id="object67" model="sin_items">
+      <field name="sin_code">83141</field>
+      <field name="description">SERVICIOS DE DISEÑO Y DESARROLLO DE TI PARA APLICACIONES</field>
+      <field name="activity_code" ref="object10"></field>
+    </record>
+
+    <record id="object68" model="sin_items">
+      <field name="sin_code">83143</field>
+      <field name="description">SOFTWARE ORIGINALES</field>
+      <field name="activity_code" ref="object10"></field>
+    </record>
+
+    <record id="object69" model="sin_items">
+      <field name="sin_code">831419</field>
+      <field name="description">SERVICIOS DE DISEÑO Y DESARROLLO DE TI PARA APLICACIONES IMPORTADO</field>
+      <field name="activity_code" ref="object10"></field>
+    </record>
+
+    <record id="object70" model="bo_edi_params">
+      <field name="param_code">19</field>
+      <field name="name">AMBIENTE</field>
+      <field name="value">2</field>
+    </record>
+
+    <record id="object71" model="bo_edi_params">
+      <field name="param_code">20</field>
+      <field name="name">TIPOEMISION</field>
+      <field name="value">1</field>
+    </record>
+
+    <record id="object72" model="invoice_dosage">
+      <field name="code">MANTENIMIENTO Y REPARACION</field>
+      <field name="auth_number">353401200123480</field>
+      <field name="end_date">2022-08-06 00:00:00</field>
+      <field name="selling_point_id" ref="object5"></field>
+      <field name="invoice_number">1</field>
+      <field name="key">GLpM4d@CV7uKI@AmCBDvSe$\@FCEdmS5DE=B*Kz5SXh4AA9ivD3CI4(@[Z7=$M[W</field>
+      <field name="invoice_caption">Ley N° 453: El proveedor debe brindar atención sin discriminación, con respeto, calidez y cordialidad a los usuarios y consumidores.</field>
+      <field name="activity_id" ref="object12"></field>
+    </record>
+
+    <record id="object73" model="bo_edi_params">
+      <field name="param_code">21</field>
+      <field name="name">CAFC</field>
+      <field name="value">101DAD6ED471D</field>
     </record>
 
     <!-- <record id="object24" model="cufd_log">

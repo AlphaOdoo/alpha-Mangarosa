@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': """Bolivia - E-invoicing""",
-    "version": "14.0.0.2",
+    "version": "14.0.0.21",
     #     'description': """
     # EDI Bolivian Localization
     # ========================
@@ -38,7 +38,6 @@
         'views/views.xml',
         'views/templates.xml',
         'views/dte_cuf_view.xml',
-        'views/company_activities_view.xml',
         'views/account_move_form_inherit.xml',
         'views/base_view_users_form_inherit.xml',
         'views/branch_office.xml',
@@ -53,12 +52,28 @@
         'security/ir.model.access.csv',
         'reports/graphic_representation.xml',
         'reports/graphic_representation_templates.xml',
+        'reports/graphic_representation_temp.xml',
+        'reports/invoice_report_template.xml',
+        'reports/invoice_report.xml',
         'views/invoice_dosage.xml',
+        'views/cancelled_invoices.xml',
         # 'views/action_manager.xml',
         # 'wizard/sales_book_wizard_view.xml',
         # 'views/account_report_menuitems.xml',
         # 'reports/sales_book.xml',
         # 'reports/sales_book_templates.xml'
+        'wizard/invoice_cancel_reason_wizard_view.xml',
+        'views/invoice_incident_view.xml',
+        'wizard/popup_wizard_success.xml',
+        'wizard/popup_wizard_warn.xml',
+        'views/bo_edi_params_view.xml',
+        'views/measure_unit.xml',
+        'views/emission_types.xml',
+        'views/sector_types.xml',
+        'views/ambience.xml',
+        'views/modalities.xml',
+        'views/cancellation_reasons.xml',
+        'views/company_activities_view.xml',
         # Account Payment
         'security/account_payment_mode.xml',
         'views/res_bank_inherit.xml',

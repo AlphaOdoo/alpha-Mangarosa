@@ -42,7 +42,8 @@ class PurchaseBookWizard(models.TransientModel):
         invoice_ids = self.env['account.move'].search(
             ['&', ('invoice_date', '>=', self.begin_date),
              ('invoice_date', '<=', self.end_date),
-             ('name', 'like', 'BILL')
+             ('journal_id.type', '=', 'purchase'),
+             ('state', '=', 'posted')
              ])
 
         # valida que la fecha inicio sea inferior a fecha fin
@@ -59,7 +60,10 @@ class PurchaseBookWizard(models.TransientModel):
         for index, inv in enumerate(invoice_ids):
             partnerData = self._partner_get(inv.partner_id.name)
             invoice_content = {}
-            invoice_content['partner_id'] = partnerData.vat
+            if(partnerData.vat != False):
+                invoice_content['partner_id'] = partnerData.vat
+            else:
+                invoice_content['partner_id'] = ' '
             invoice_content['partner'] = partnerData.name
             invoice_content['name'] = inv.name
             invoice_content['invoice_date'] = inv.invoice_date
@@ -78,9 +82,18 @@ class PurchaseBookWizard(models.TransientModel):
             invoice_content['base_cf'] = ' '
             invoice_content['credit'] = ' '
             invoice_content['puchase_type'] = ' '
-            invoice_content['auth_number'] = inv.auth_number
-            invoice_content['control_code'] = inv.control_code
-            invoice_content['dui'] = inv.dui
+            if(inv.auth_number != False):
+                invoice_content['auth_number'] = inv.auth_number
+            else:
+                invoice_content['auth_number'] = 0
+            if(inv.control_code != False):
+                invoice_content['control_code'] = inv.control_code
+            else:
+                invoice_content['control_code'] = 0
+            if(inv.dui != False):
+                invoice_content['dui'] = inv.dui
+            else:
+                invoice_content['dui'] = 0
 
             data[index] = invoice_content
         return {
@@ -110,31 +123,32 @@ class PurchaseBookWizard(models.TransientModel):
         head.set_bg_color('blue')
         head.set_font_color('white')
         txt = workbook.add_format({'font_size': '10px'})
-        sheet.merge_range('B2:I3', 'LIBRO DE COMPRAS', head)
-        sheet.write('A7', 'N°', cell_format)
-        sheet.write('B7', 'Especificación', cell_format)
-        sheet.write('C7', 'NIT Proveedor', cell_format)
-        sheet.write('D7', 'Razon Social Proveedor', cell_format)
-        sheet.write('E7', 'Código de Autorización', cell_format)
-        sheet.write('F7', 'Número de Factura', cell_format)
-        sheet.write('G7', 'Numero DUI/DIM', cell_format)
-        sheet.write('H7', 'Fecha de Factura', cell_format)
-        sheet.write('I7', 'Importe Total Compra', cell_format)
-        sheet.write('J7', 'Importe ICE', cell_format)
-        sheet.write('K7', 'Importe IEHD', cell_format)
-        sheet.write('L7', 'Importe IPJ', cell_format)
-        sheet.write('M7', 'Tasas', cell_format)
-        sheet.write('N7', 'Otro NO Sujeto a credito Fiscal', cell_format)
-        sheet.write('O7', 'Importes Extranjeros', cell_format)
-        sheet.write('P7', 'Importe Compras Grabadas a Tasa Cero', cell_format)
-        sheet.write('Q7', 'Subtotal', cell_format)
+        sheet.merge_range('B2:I3', 'LIBRO DE COMPRAS', title)
+        sheet.merge_range('B3:C3', '(Expresado en Bolivianos)', txt)
+        sheet.write('A7', 'N°', head)
+        sheet.write('B7', 'Especificación', head)
+        sheet.write('C7', 'NIT Proveedor', head)
+        sheet.write('D7', 'Razon Social Proveedor', head)
+        sheet.write('E7', 'Código de Autorización', head)
+        sheet.write('F7', 'Número de Factura', head)
+        sheet.write('G7', 'Numero DUI/DIM', head)
+        sheet.write('H7', 'Fecha de Factura', head)
+        sheet.write('I7', 'Importe Total Compra', head)
+        sheet.write('J7', 'Importe ICE', head)
+        sheet.write('K7', 'Importe IEHD', head)
+        sheet.write('L7', 'Importe IPJ', head)
+        sheet.write('M7', 'Tasas', head)
+        sheet.write('N7', 'Otro NO Sujeto a credito Fiscal', head)
+        sheet.write('O7', 'Importes Extranjeros', head)
+        sheet.write('P7', 'Importe Compras Grabadas a Tasa Cero', head)
+        sheet.write('Q7', 'Subtotal', head)
         sheet.write(
-            'R7', 'Descuentos Bonificaciones Rebajas Sujetas al IVA', cell_format)
-        sheet.write('S7', 'Importe GIFT CARD', cell_format)
-        sheet.write('T7', 'Importe Base CF', cell_format)
-        sheet.write('U7', 'Credito Fiscal', cell_format)
-        sheet.write('V7', 'Tipo Compra', cell_format)
-        sheet.write('W7', 'Código de Control', cell_format)
+            'R7', 'Descuentos Bonificaciones Rebajas Sujetas al IVA', head)
+        sheet.write('S7', 'Importe GIFT CARD', head)
+        sheet.write('T7', 'Importe Base CF', head)
+        sheet.write('U7', 'Credito Fiscal', head)
+        sheet.write('V7', 'Tipo Compra', head)
+        sheet.write('W7', 'Código de Control', head)
 
         for index, inv in enumerate(data.items()):
             sheet.write('A'+str(i), j, cell_format)

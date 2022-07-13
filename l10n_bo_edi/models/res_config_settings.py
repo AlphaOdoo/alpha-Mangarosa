@@ -1,4 +1,7 @@
 import logging
+import asyncio
+from odoo.exceptions import UserError, Warning, ValidationError
+
 from odoo import api, fields, models
 
 _logger = logging.getLogger(__name__)
@@ -63,14 +66,45 @@ class ResConfigSettings(models.TransientModel):
 
     l10n_bo_invoicing_type = fields.Boolean('Invoicing Type')
 
-    @api.onchange('l10n_bo_invoicing_type')
-    def _invoice_type_change(self):
-        if self.l10n_bo_invoicing_type == False:
-            for i in self.env['account.move'].search([]):
-                i.e_billing = False
+    l10n_bo_graphic_rep_format = fields.Boolean('Graphic Representation Format')
+
+    l10n_bo_graphic_rep_size = fields.Boolean('Graphic Representation Size')
+
+    ##TODO Agregar param readonly para modo Online Offline:
+    l10n_bo_invoicing_current_status = fields.Boolean('Current Status (Offline/Online)', default = True)
+
+    # @api.onchange('l10n_bo_invoicing_type')
+    # def _invoice_type_change(self):
+    #     if self.l10n_bo_invoicing_type == False:
+    #         for i in self.env['account.move'].search([]):
+    #             i.e_billing = False
+    #     else:
+    #         for i in self.env['account.move'].search([]):
+    #             i.e_billing = True
+
+    # @api.onchange('l10n_bo_graphic_rep_format')
+    # def _graphic_format_change(self):
+    #     if self.l10n_bo_graphic_rep_format == False:
+    #         for i in self.env['account.move'].search([]):
+    #             i.representation_format = False
+    #     else:
+    #         for i in self.env['account.move'].search([]):
+    #             i.representation_format = True
+    
+    # @api.onchange('l10n_bo_graphic_rep_size')
+    # def _graphic_size_change(self):
+    #     if self.l10n_bo_graphic_rep_size == False:
+    #         for i in self.env['account.move'].search([]):
+    #             i.representation_size = False
+    #     else:
+    #         for i in self.env['account.move'].search([]):
+    #             i.representation_size = True
+
+    def generate_cufd(self):
+        if self.env['account.move'].getBranchOffice()[1] and self.env['account.move'].getBranchOffice()[2]:
+            asyncio.run(self.env['account.move'].getCUFD())
         else:
-            for i in self.env['account.move'].search([]):
-                i.e_billing = True
+            raise Warning('The current user doesn''t have branch office nor a selling point configured')
 
     # Metodos Requeridos para el correcto registro y obtencion
 
@@ -78,6 +112,12 @@ class ResConfigSettings(models.TransientModel):
         res = super(ResConfigSettings, self).set_values()
         self.env['ir.config_parameter'].sudo().set_param(
             'res.config.settings.l10n_bo_invoicing_type', self.l10n_bo_invoicing_type)
+        self.env['ir.config_parameter'].sudo().set_param(
+            'res.config.settings.l10n_bo_graphic_rep_format', self.l10n_bo_graphic_rep_format)
+        self.env['ir.config_parameter'].sudo().set_param(
+            'res.config.settings.l10n_bo_graphic_rep_size', self.l10n_bo_graphic_rep_size)
+        self.env['ir.config_parameter'].sudo().set_param(
+            'res.config.settings.l10n_bo_invoicing_current_status', self.l10n_bo_invoicing_current_status)
         # self.env['ir.config_parameter'].sudo().set_param(
         #     'res.config.settings.l10n_bo_emission_type', self.l10n_bo_emission_type)
         # self.env['ir.config_parameter'].sudo().set_param(
@@ -98,12 +138,21 @@ class ResConfigSettings(models.TransientModel):
         get_param = self.env['ir.config_parameter'].sudo().get_param
         get_invoicing_type = get_param(
             'res.config.settings.l10n_bo_invoicing_type')
+        get_graphic_rep_format = get_param(
+            'res.config.settings.l10n_bo_graphic_rep_format')
+        get_graphic_rep_size = get_param(
+            'res.config.settings.l10n_bo_graphic_rep_size')
+        get_current_status = get_param(
+            'res.config.settings.l10n_bo_invoicing_current_status')
         # get_invoicing_modality = get_param(
         #     'res.config.settings.l10n_bo_invoicing_modality')
         # get_ambience = get_param(
         #     'res.config.settings.l10n_bo_ambience')
         res.update(
-            l10n_bo_invoicing_type=get_invoicing_type,
+            l10n_bo_invoicing_type = get_invoicing_type,
+            l10n_bo_graphic_rep_format = get_graphic_rep_format,
+            l10n_bo_graphic_rep_size = get_graphic_rep_size,
+            l10n_bo_invoicing_current_status = get_current_status
             # l10n_bo_invoicing_modality=get_invoicing_modality,
             # l10n_bo_ambience=get_ambience
         )

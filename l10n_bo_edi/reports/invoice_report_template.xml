@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="invoice_report_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+             <t t-set="ili" t-value="doc.invoice_line_ids"/>
+              <t t-set="self_company" t-value="doc.env.company"/>
+                <!-- <t t-call="web.external_layout"> -->
+                    <!-- <t t-call="web.basic_layout"> -->
+                    <div style="border: 1px solid black; height: 100%; padding-left:5px; padding-right:5px;" >
+                        <link rel="stylesheet" href="/l10n_bo_edi/static/src/css/style.css"/> 
+                        <div class="page">
+                            <div class="container p-3" align="center" style="height:70% !important;"> 
+
+                                <table class="table table-condensed" style="width:100%">
+                                <tbody>
+                                    <tr>
+                                        <th style="width:60%"></th>
+                                        <!-- <th style="width:20%"></th> -->
+                                        <th style="width:40%"></th>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <!-- <img src='/l10n_bo_edi/static/image/asLogo.jpeg' alt="Logo"/>
+                                            <br/> <br/>
+                                            <b t-field="self_company.name" class="mt16"/>
+                                            <br/>
+                                            <b t-field="self_company.street" />
+                                            <br/>
+                                            Telefono: <b t-field="self_company.phone"/>
+                                            <br/>
+                                            <b t-field="self_company.city"/>
+                                            <br/> -->
+                                            <strong style="font-size: 20px !important;">ALPHA SYSTEMS S.R.L.</strong> <![CDATA[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]]> <strong style="font-size: 40px !important;">FACTURA</strong>
+                                            <div style="font-size: 12px !important;">
+                                                <p>Computación y Comunicación</p>
+                                                <p>CASA MATRIZ Av. 6 de Agosto N° 2455 Edif. Hilda Piso 7</p>
+                                                <p>Tel.: 591 2 2189300 - Fax 591 2 2189320. PO Box: 9771. La Paz - Bolivia</p>
+                                                <p>SUCURSAL 1:  Av. Irala 49 ° Telf.591 3 3174500. Santa Cruz - Bolivia</p>
+                                                <p>SUCURSAL 2:  Av. Oquendo 0731 °Torre Oquendo Piso 7 ° Telf.:591 4 4583104. Cochabamba - Bolivia</p>
+                                            </div>
+                                        </td>
+                                        <!-- <td>
+                                            <h1 style="vertical-align:top !important;">FACTURA</h1>
+                                        </td> -->
+                                        <td style="font-size: 14px !important;">
+                                            <b style="font-size: 20px !important;">NIT:     <b t-field="self_company.vat"/></b>
+                                            <br/><br/>
+                                            <b>FACTURA N°     <b t-field="doc.l10n_bo_invoice_number"/></b>
+                                            <br/><br/>
+                                            <b>AUTORIZACION N°:     <b t-field="doc.auth_number" /></b>
+                                            <br/><br/>
+                                            <b  t-field="doc.dosage_id.activity_id.name" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                </table>
+
+                                <br/><br/><br/>
+
+                                <table class="table table-condensed" style="width:100%">
+                                <tbody>
+                                    <tr>
+                                        <th style="width:70%"></th>
+                                        <th style="width:30%"></th>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Fecha: </strong> <span t-field="doc.invoice_date" t-options='{"format": "dd/MM/yyyy"}' />
+                                        </td>
+                                        <td>
+                                            <strong>ORIGINAL - CLIENTE</strong>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                </table>
+
+                                <hr/>
+
+                                <table class="table table-condensed" style="width:100%">
+                                <tbody>
+                                    <tr>
+                                        <th style="width:70%"></th>
+                                        <th style="width:30%"></th>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>SEÑOR (ES): </strong> <span t-field="doc.partner_id" />
+                                        </td>
+                                        <td>
+                                            <strong>NIT/C.I.: </strong> <span t-field="doc.partner_id.vat" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                </table>
+                                <br/><br/><br/>
+                                <table class="table table-condensed">
+                                    <thead style="border: 1px solid black;">
+                                        <tr>
+                                        <hr/>
+                                            <!-- <th name="th_name">Codigo Producto</th> -->
+                                            <th style="width:10%" name="th_quantity">CANTIDAD</th>
+                                            <th style="width:40%" name="th_name">DETALLE</th>
+                                            <!-- <th name="th_price">Precio Unitario</th> -->
+                                            <!-- <th name="th_disc_amount">DESCUENTOS</th> -->
+                                            <th style="width:30%" name="th_price_total">IMPORTE</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody style="text-align:center;">
+
+                                    <!-- <t t-set="ili" t-value="doc.invoice_line_ids"/> -->
+
+                                        <tr t-foreach="ili" t-as="i">
+                                            <!-- <td t-if="i.quantity" name="td_quantity">
+                                                <t t-esc="i.quantity" align="center"/>
+                                            </td> -->
+
+                                            <!-- <td t-if="i.name" name="td_name">
+                                                <t t-esc="i.name" />
+                                                <t t-esc="doc.get_code_sep(i.name)"/>
+                                            </td> -->
+
+                                                <!-- <t t-esc="i.name" /> -->
+                                            <!-- <td t-if="i.name" name="td_name">
+                                                <t t-esc="doc.get_name_sep(i.name)"/>
+                                            </td> -->
+
+                                            <!-- <td t-if="i.disc_amount" name="td_disc_amount">
+                                                <t t-esc="i.disc_amount" align="center"/>
+                                            </td> -->
+
+                                            <!-- <td t-if="i.price_total" name="td_price_total">
+                                                <span>Bs.   </span><t t-esc="i.price_total" t-options='{"widget": "float", "precision": 2}'  align="center"/>
+                                            </td> -->
+
+                                            <!-- <td t-if="i.price_subtotal" name="td_price_subtotal">
+                                                <t t-esc="i.price_subtotal" align="center"/>
+                                            </td> -->
+                                        </tr>                                    
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="container" align="center" style="height:30%; !important;">
+                                <table class="table table-condensed" style="width:100%; position: absolute; bottom:8; left:-1; right:8; margin-left:10px; margin-bottom:5px; !important;">
+                                    <tbody>
+                                        <tr>
+                                            <th style="width:60%"></th>
+                                            <th style="width:40%"></th>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" style="text-align:end; margin-right:5px;">
+                                                <strong>TOTAL : <![CDATA[&nbsp;&nbsp;&nbsp;&nbsp;]]></strong>
+                                            </td>
+                                            <td>
+                                                <div t-if="doc.total_conv == 0.0">
+                                                    <span> Bs.    </span><span t-field="doc.amount_total" t-options='{"widget":"False", "widget": "float", "precision": 2}' class="mt16" align="right"/>
+                                                </div>
+                                                <div t-else="">
+                                                    <span> Bs.    </span><span t-field="doc.total_conv" t-options='{"widget":"False", "widget": "float", "precision": 2}' class="mt16" align="right"/>
+                                                </div>
+                                                <hr/>        
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <div t-if="doc.total_conv != 0.0">
+                                                    <span>SOLO PARA EFECTOS DE CREDITO FISCAL AL TIPO DE CAMBIO Bs. 6.96 POR $us 1,00. LA PRESENTE FACTURA EQUIVALE A:</span>
+                                                    <hr/>
+                                                </div>
+                                                <strong>SON: </strong><span t-field="doc.total_lit"></span><span> BOLIVIANOS</span>
+                                            </td>
+                                            <td rowspan="2">
+                                                <img t-att-src="'data:image/*;base64,%s' % to_text(doc.qr_code)" width="150" height="150" style='margin-top:0px; padding-top:0px;'/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <span>CÓDIGO DE CONTROL </span><strong t-field="doc.control_code"></strong>
+                                                <br/>
+                                                <span>FECHA LÍMITE DE EMISIÓN: </span><strong t-field="doc.dosage_id.end_date" t-options='{"format": "dd/MM/yyyy"}' ></strong>
+                                                <br/><br/>
+                                                <span style="font-size: 12px !important;">"ESTA FACTURA CONTRIBUYE AL DESARROLLO DEL PAÍS, 
+                                                    EL USO ILÍCITO SERÁ SANCIONADO DE ACUERDO A LEY"</span>
+                                                <br/><br/>
+                                                <span style="font-size: 11px !important;">	Ley N° 453: El proveedor debe brindar atención sin discriminación, con respeto, calidez y cordialidad a los usuarios y consumidores.</span>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            <!-- </t> -->
+        </t>
+    </template>
+</odoo>

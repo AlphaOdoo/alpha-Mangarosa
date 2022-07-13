@@ -4,6 +4,7 @@ from odoo import fields, models
 class Cufd_log(models.Model):
     _name = 'cufd_log'
     _description = 'cufd'
+    _rec_name = 'id_cufd' ## Para cambiar el texto a desplegar en front
 
     id_cufd = fields.Integer(string='Cufd ID')
 
