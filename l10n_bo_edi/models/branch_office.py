@@ -4,6 +4,8 @@ from odoo import fields, models
 class BranchOffice(models.Model):
     _name = 'branch_office'
     _description = 'branch_office'
+    _rec_name = 'description' ## Para cambiar el texto a desplegar en front
+
 
     id_branch_office = fields.Integer(
         string='Branch Office Code', required=True)

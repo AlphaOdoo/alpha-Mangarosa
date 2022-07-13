@@ -5,6 +5,7 @@ import zeep
 from zeep import client
 
 import codecs
+import socket
 
 
 class SinSync(models.Model):
@@ -25,9 +26,9 @@ class SinSync(models.Model):
             wsdl='https://pilotosiatservicios.impuestos.gob.bo/v2/FacturacionCodigos?wsdl',
             settings=settings)
         result = client.service.verificarComunicacion()
-        print(result)
+        return result.mensajesList[0]
 
-    def get_cufd(self, ambiente, modalidad, puntoventa, codSistema, codSucursal, cuis, nit, tipoCodigo):
+    async def get_cufd(self, ambiente, modalidad, puntoventa, codSistema, codSucursal, cuis, nit, tipoCodigo):
         token = self._get_token()
         settings = zeep.Settings(
             extra_http_headers={'apikey': str(token)})
@@ -47,8 +48,10 @@ class SinSync(models.Model):
         result = client.service.cufd(**params)
         if (tipoCodigo == 0):  # CodigoControl
             return result.codigoControl
-        else:  # CUFD
+        elif(tipoCodigo == 1):  # CUFD
             return result.codigo
+        else: 
+            return result
 
     # SERVICIO DE SINCRONIZACIÓN DE DATOS
 
@@ -114,13 +117,12 @@ class SinSync(models.Model):
         date_time = self.env['boedi_date_time']
         if (ambiente == 1):
             date_time.search([]).unlink()
-            print(date_time.search([]))
             new_record = {
                 'date_time': result.fechaHora
             }
             date_time.create(new_record)
 
-        print(date_time.search([]).date_time)
+        # print(date_time.search([]).date_time)
 
     def sync_actividades_doc_sector(self, ws_method):
         client = ws_method['client']
@@ -303,27 +305,151 @@ class SinSync(models.Model):
                 document_sec_type.create(new_record)
             for doc_sec in document_sec_type.search([]):
                 print(doc_sec.description)
+    
+    def sync_emission_types(self, ws_method):
+        client = ws_method['client']
+        params = ws_method['params']
+        ambiente = int(ws_method['ambience'])
+        result = client.service.sincronizarParametricaTipoEmision(
+            **params)
+
+        if (ambiente == 1):
+            emission_types = self.env['emission_types']
+            emission_types.search([]).unlink()
+            print(emission_types.search([]))
+            for emission_type in result.listaCodigos:
+                new_record = {
+                    'id_emission_type': emission_type.codigoClasificador,
+                    'description': emission_type.descripcion
+                }
+                emission_types.create(new_record)
+            for doc_sec in emission_types.search([]):
+                print(doc_sec.description)
+    
+    def sync_room_types(self, ws_method):
+        client = ws_method['client']
+        params = ws_method['params']
+        ambiente = int(ws_method['ambience'])
+        result = client.service.sincronizarParametricaTipoHabitacion(
+            **params)
+
+        # if (ambiente == 1):
+        #     emission_types = self.env['emission_types']
+        #     emission_types.search([]).unlink()
+        #     print(emission_types.search([]))
+        #     for emission_type in result.listaCodigos:
+        #         new_record = {
+        #             'id_emission_type': emission_type.codigoClasificador,
+        #             'description': emission_type.descripcion
+        #         }
+        #         emission_types.create(new_record)
+        #     for doc_sec in emission_types.search([]):
+        #         print(doc_sec.description)
+
+    def sync_payment_methods(self, ws_method):
+        client = ws_method['client']
+        params = ws_method['params']
+        ambiente = int(ws_method['ambience'])
+        result = client.service.sincronizarParametricaTipoMetodoPago(
+            **params)
+
+        # if (ambiente == 1):
+        #     payment_methods = self.env['payment_methods']
+        #     payment_methods.search([]).unlink()
+        #     print(payment_methods.search([]))
+        #     for emission_type in result.listaCodigos:
+        #         new_record = {
+        #             'id_emission_type': emission_type.codigoClasificador,
+        #             'description': emission_type.descripcion
+        #         }
+        #         payment_methods.create(new_record)
+        #     for doc_sec in payment_methods.search([]):
+        #         print(doc_sec.description)
+    
+    def sync_currency_types(self, ws_method):
+        client = ws_method['client']
+        params = ws_method['params']
+        ambiente = int(ws_method['ambience'])
+        result = client.service.sincronizarParametricaTipoMoneda(
+            **params)
+
+        # if (ambiente == 1):
+        #     payment_methods = self.env['payment_methods']
+        #     payment_methods.search([]).unlink()
+        #     print(payment_methods.search([]))
+        #     for emission_type in result.listaCodigos:
+        #         new_record = {
+        #             'id_emission_type': emission_type.codigoClasificador,
+        #             'description': emission_type.descripcion
+        #         }
+        #         payment_methods.create(new_record)
+        #     for doc_sec in payment_methods.search([]):
+        #         print(doc_sec.description)
+
+    def sync_selling_point_types(self, ws_method):
+        client = ws_method['client']
+        params = ws_method['params']
+        ambiente = int(ws_method['ambience'])
+        result = client.service.sincronizarParametricaTipoPuntoVenta(
+            **params)
+
+        # if (ambiente == 1):
+        #     payment_methods = self.env['payment_methods']
+        #     payment_methods.search([]).unlink()
+        #     print(payment_methods.search([]))
+        #     for emission_type in result.listaCodigos:
+        #         new_record = {
+        #             'id_emission_type': emission_type.codigoClasificador,
+        #             'description': emission_type.descripcion
+        #         }
+        #         payment_methods.create(new_record)
+        #     for doc_sec in payment_methods.search([]):
+        #         print(doc_sec.description)
+
+    def sync_invoice_types(self, ws_method):
+        client = ws_method['client']
+        params = ws_method['params']
+        ambiente = int(ws_method['ambience'])
+        result = client.service.sincronizarParametricaTiposFactura(
+            **params)
+
+        # if (ambiente == 1):
+        #     payment_methods = self.env['payment_methods']
+        #     payment_methods.search([]).unlink()
+        #     print(payment_methods.search([]))
+        #     for emission_type in result.listaCodigos:
+        #         new_record = {
+        #             'id_emission_type': emission_type.codigoClasificador,
+        #             'description': emission_type.descripcion
+        #         }
+        #         payment_methods.create(new_record)
+        #     for doc_sec in payment_methods.search([]):
+        #         print(doc_sec.description)
+    
+    def sync_measure_unit(self, ws_method):
+        client = ws_method['client']
+        params = ws_method['params']
+        ambiente = int(ws_method['ambience'])
+        result = client.service.sincronizarParametricaUnidadMedida(
+            **params)
+
+        if (ambiente == 1):
+            measure_unit = self.env['measure_unit']
+            measure_unit.search([]).unlink()
+            print(measure_unit.search([]))
+            for measure in result.listaCodigos:
+                new_record = {
+                    'measure_unit_code': measure.codigoClasificador,
+                    'description': measure.descripcion
+                }
+                measure_unit.create(new_record)
+            for measure in measure_unit.search([]):
+                print(measure.description)
 
     # Métodos de Facturacion Electrónica
 
-    def send_invoice(self, cufd, xml_file, xml_hash):
-
+    def send_invoice(self, emission_type, ambience, code_modality, selling_point, system_code, branch_office, cuis, nit, cufd, xml_file, xml_hash):
         code_doc_sec = '1'
-        code_emission_type = '1'
-        code_modality = str(self.env['modalities'].search(
-            [('description', '=', 'ELECTRONICA')]).id_modality)
-        ambience = str(self.env['ambience'].search(
-            [('description', '=', 'PRUEBAS')]).id_ambience)
-        selling_point = str(self.env['selling_point'].search(
-            [('description', '=', 'PUNTO DE VENTA 0')]).id_selling_point)
-        branch_office = str(self.env['branch_office'].search(
-            [('description', '=', 'CASA MATRIZ')]).id_branch_office)
-        system_code = str(self.env['bo_edi_params'].search(
-            [('name', '=', 'CODIGOSISTEMA')]).value)
-        cuis = str(self.env['bo_edi_params'].search(
-            [('name', '=', 'CUIS-0')]).value)
-        nit = str(self.env['bo_edi_params'].search(
-            [('name', '=', 'NIT')]).value)
         invoice_type = '1'
         date = str(self.env['account.move'].getTime().strftime(
             "%Y-%m-%dT%H:%M:%S.%f"))
@@ -334,16 +460,10 @@ class SinSync(models.Model):
         client = zeep.Client(
             wsdl='https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionCompraVenta?wsdl',
             settings=settings)
-        # print('-------------------------------------------')
-        # print(xml_file.decode(encoding='Latin'))
-        # print('-------------------------------------------')
-        # print(xml_hash)
-        # print('-------------------------------------------')
-        # print(date)
         params = {'SolicitudServicioRecepcionFactura': {
             'codigoAmbiente': ambience,
             'codigoDocumentoSector': code_doc_sec,
-            'codigoEmision': code_emission_type,
+            'codigoEmision': emission_type,
             'codigoModalidad': code_modality,
             'codigoPuntoVenta': selling_point,
             'codigoSistema': system_code,
@@ -359,16 +479,18 @@ class SinSync(models.Model):
             'hashArchivo': xml_hash
         }
         }
-        print(params)
+        print(str(params))
         result = client.service.recepcionFactura(**params)
         print(result)
+        return result
 
     def sign_xml(self, xml, credentials_path, pk, cert, signed_path):
         token = self._get_token()
         settings = zeep.Settings(
             extra_http_headers={'apikey': str(token)})
         client = zeep.Client(
-            wsdl='http://127.0.0.1:8080/FirmaDigital/FirmaDigital?wsdl',
+            wsdl='http://190.181.63.219:8080/FirmaDigital/FirmaDigital?wsdl', ## Externo
+            # wsdl='http://10.1.4.163:8080/FirmaDigital/FirmaDigital?wsdl', ## Alpha Interno
             settings=settings)
 
         params = {
@@ -379,7 +501,42 @@ class SinSync(models.Model):
             'arg4': signed_path
         }
 
+        # print(str(params))
+
         result = client.service.firmarXML(**params)
+        return result
+
+    def cancel_invoice(self, cuf, cufd, reason_code, id_ambience, id_sector_type, id_emission, id_modality, id_selling_point, system_code, id_branch_office):
+        
+        nit = str(self.env.company.vat)
+        cuis = str(self.env['bo_edi_params'].search(
+            [('name', '=', 'CUIS-0')]).value)
+        invoice_type = '1'
+        token = self._get_token()
+        settings = zeep.Settings(
+            extra_http_headers={'apikey': str(token)})
+        client = zeep.Client(
+            wsdl='https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturacionCompraVenta?wsdl',
+            settings=settings)
+        params = {'SolicitudServicioAnulacionFactura': {
+            'codigoAmbiente': id_ambience,
+            'codigoDocumentoSector': id_sector_type,
+            'codigoEmision': id_emission,
+            'codigoModalidad': id_modality,
+            'codigoPuntoVenta': id_selling_point,
+            'codigoSistema': system_code,
+            'codigoSucursal': id_branch_office,
+            'cufd': cufd,
+            'cuis': cuis,
+            'nit': nit,
+            'tipoFacturaDocumento': invoice_type,
+            'codigoMotivo': str(reason_code),
+            'cuf': cuf
+            }
+        }
+        print(str(params))
+        result = client.service.anulacionFactura(**params)
+        print(result)
         return result
 
     # Método de consumo Certificación Catalogos
@@ -410,7 +567,55 @@ class SinSync(models.Model):
                                             nit)
 
         for i in range(iterations):
-            self.sync_document_sec_type(
+            self.sync_measure_unit(
                 ws_method_sync
             )
         print('Prueba Finalizada')
+
+    # Métodos de Eventos Significativos
+
+    def send_invoice_event(self, ambiente,  puntoventa, codSistema, codSucursal, cuis, nit, cufd,codigoMotivoEvento,descripcion,fechaInicioEvento,fechaFinEvento,cufdEvento):
+        token = self._get_token()
+        settings = zeep.Settings(
+            extra_http_headers={'apikey': str(token)})
+        client = zeep.Client(
+            wsdl='https://pilotosiatservicios.impuestos.gob.bo/v2/FacturacionOperaciones?wsdl',
+            settings=settings)
+        params = {'SolicitudEventoSignificativo': {
+            'codigoAmbiente': ambiente,
+            'codigoSistema': codSistema,
+            'nit': nit,
+            'cuis': cuis,
+            'cufd': cufd,
+            'codigoSucursal': codSucursal,
+            'codigoPuntoVenta': puntoventa,
+            'codigoMotivoEvento': codigoMotivoEvento,
+            'descripcion': descripcion,
+            'fechaHoraInicioEvento': fechaInicioEvento,
+            'fechaHoraFinEvento': fechaFinEvento,
+            'cufdEvento': cufdEvento        
+        }
+        }
+        print(str(params))
+        result = client.service.registroEventoSignificativo(**params)
+        print(result)
+        return result.codigoRecepcionEventoSignificativo
+   
+    def conexion(self):
+        resp=False
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.settimeout(5)
+        try:
+           s.connect(("www.google.com", 80))
+        except (socket.gaierror, socket.timeout):
+            print("Sin conexión a internet")
+        else:
+            print("Con conexión a internet")
+            resp=True
+        s.close()        
+        return resp
+
+
+
+
+        

@@ -49,35 +49,46 @@
                         </div>
                     </div>
 
-                    <div id="l10n_boedi_config_container" attrs="{'invisible': [('l10n_bo_invoicing_type', '!=', True)]}">
-
-                        <div id="l10n_bo_section" class="row mt16 o_settings_container" attrs="{'invisible': [('country_code', '!=', 'BO')]}">
-
-                            <div class="col-12 col-lg-6 o_setting_box">
-                                <div class="o_setting_left_pane"/>
-                                <div class="o_setting_right_pane">
-                                    <span class="o_form_label">SIN Codes</span>
-                                    <div class="text-muted">
-                                        Codes provided by SIN 
-                                    </div>
-                                    <div class="content-group">
-                                        <div class="row mt16">
-                                            <label string="System Code" for="l10n_bo_system_code" class="col-lg-4 o_light_label"/>
-                                            <field name="l10n_bo_system_code" context="{'search_by_code': True}"/>
-
-                                            <label string="CUIS Code" for="l10n_bo_CUIS_code" class="col-lg-4 o_light_label"/>
-                                            <field name="l10n_bo_CUIS_code" context="{'search_by_code': True}"/>
-
-                                            <!-- <label string="Current CUF Code" for="l10n_bo_current_cuf" class="col-lg-4 o_light_label"/>
-                                            <field name="l10n_bo_current_cuf" context="{'search_by_code': True}"/> -->
-
-                                            <!-- <label string="Current CUFD Code" for="l10n_bo_current_cufd" class="col-lg-4 o_light_label"/>
-                                            <field name="l10n_bo_current_cufd" context="{'search_by_code': True}"/> -->
-
-                                        </div>
+                    <div id="l10n_bo_section2" class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Graphic Representation Format</span>
+                                <span class="fa fa-lg fa-money" title="Values set here are company-specific." aria-label="Values set here are company-specific." groups="base.group_multi_company" role="img"/>
+                                <div class="text-muted">
+                                    Change the current graphic representation format
+                                </div>
+                                <div class="content-group">
+                                    <div class="row mt16">
+                                        <label string="Representation Format (PDF/WebPage) " for="l10n_bo_graphic_rep_format" class="col-lg-4 o_light_label"/>
+                                        <field name="l10n_bo_graphic_rep_format" widget="boolean_toggle" />
                                     </div>
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <!-- <span class="o_form_label">Current Status</span>
+                                <div class="text-muted">
+                                    Current invoicing status
+                                </div>
+                                <div class="content-group">
+                                    <div class="row mt16">
+                                        <label string="Current Status (Offline/Online)" for="l10n_bo_invoicing_current_status" class="col-lg-4 o_light_label"/>
+                                        <field name="l10n_bo_invoicing_current_status" attrs="{'readonly': [(1, '=', 1)]}" widget="boolean_toggle"/>
+                                    </div>
+                                </div> -->
+                                <button name='generate_cufd' type="object" string="Generate CUFD" class="btn-primary"/>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="l10n_boedi_config_container" attrs="{'invisible': [('l10n_bo_invoicing_type', '!=', True)]}">
+
+                        <div id="l10n_bo_section" class="row mt16 o_settings_container" attrs="{'invisible': [('country_code', '!=', 'BO')]}">
 
                             <div class="col-12 col-lg-6 o_setting_box">
                                 <div class="o_setting_left_pane"/>
@@ -103,6 +114,42 @@
                                         <br/>
                                         <button name='%(cufd_log_action)d' icon="fa-arrow-right" type="action" string="CUFD Log" class="btn-link"/>
                                         <!--name="%(fetchmail.action_email_server_tree)d"-->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-lg-6 o_setting_box">
+                                <div class="o_setting_left_pane"/>
+                                <div class="o_setting_right_pane">
+                                    <span class="o_form_label">Graphic Representation Size</span>
+                                    <div class="text-muted">
+                                        Change graphic representation size
+                                    </div>
+                                    <div class="content-group">
+                                        <div class="row mt16">
+                                            <label string="Current Size" for="l10n_bo_graphic_rep_size" class="col-lg-4 o_light_label"/>
+                                            <field name="l10n_bo_graphic_rep_size" widget="boolean_toggle"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- <div class="col-12 col-lg-6 o_setting_box">
+                                <div class="o_setting_left_pane"/>
+                                <div class="o_setting_right_pane">
+                                    <span class="o_form_label">SIN Codes</span>
+                                    <div class="text-muted">
+                                        Codes provided by SIN 
+                                    </div>
+                                    <div class="content-group">
+                                        <div class="row mt16">
+                                            <label string="System Code" for="l10n_bo_system_code" class="col-lg-4 o_light_label"/>
+                                            <field name="l10n_bo_system_code" context="{'search_by_code': True}"/>
+
+                                            <label string="CUIS Code" for="l10n_bo_CUIS_code" class="col-lg-4 o_light_label"/>
+                                            <field name="l10n_bo_CUIS_code" context="{'search_by_code': True}"/>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -185,8 +232,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
+                            </div> -->
                         </div>
 
 

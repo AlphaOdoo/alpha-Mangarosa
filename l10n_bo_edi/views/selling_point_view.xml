@@ -17,6 +17,9 @@
                                 <field name="branch_office_id"/>
                             </group>
                             <group>
+                                <field name="cuis"/>
+                            </group>
+                            <group>
                                 <field name="active"/>
                             </group>
                         </group>
@@ -48,6 +51,7 @@
                     <field name="id_selling_point"/>
                     <field name="description"/>
                     <field name="branch_office_id"/>
+                    <field name="cuis"/>
                     <field name="active"/>
                 </tree>
             </field>
